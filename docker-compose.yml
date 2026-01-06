@@ -1,0 +1,66 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: cn_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: cndb
+      MYSQL_USER: cn
+      MYSQL_PASSWORD: cnpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - cn_mysqldata:/var/lib/mysql
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: --default-authentication-plugin=mysql_native_password
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: cn_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: cn
+      PMA_PASSWORD: cnpass
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  backend:
+    build: ./backend
+    container_name: cn_backend
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: cndb
+      DB_USERNAME: cn
+      DB_PASSWORD: cnpass
+      SESSION_DRIVER: file
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: cn_frontend
+    environment:
+      VITE_API_BASE: http://localhost:8000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  cn_mysqldata:
