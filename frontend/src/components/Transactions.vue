@@ -85,7 +85,8 @@
                     <div class="modal-body p-4">
                         <h6 class="mb-2">ยืนยันการลบ</h6>
                         <div v-if="deleteItem">
-                            จำนวนเงิน: <b>{{ formatMoney(deleteItem.amount) }}</b> บาท<br />
+                            <!-- ใส่สกุลเงินได้ </b> ********** </div> -->
+                            จำนวนเงิน: <b>{{ formatMoney(deleteItem.amount) }}</b><br />
                             ของวันที่ {{ formatDateTime(deleteItem.created_at) }}<br />
                             จากอีเมล {{ user?.email }}
                         </div>

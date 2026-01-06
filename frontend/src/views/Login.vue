@@ -1,4 +1,8 @@
 <template>
+    <div style="position:fixed;bottom:10px;right:10px;z-index:9999;background:#000;color:#fff;padding:6px 10px;">
+  LOGIN_VUE_EDIT_OK
+</div>
+
     <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
         <div class="card shadow-sm" style="width: 420px; max-width: calc(100vw - 24px);">
             <div class="card-body p-4">
@@ -27,7 +31,7 @@
                 </form>
 
                 <div class="text-center text-muted mt-3" style="font-size: 12px;">
-                    * Validate Email ที่ Frontend ก่อนส่งไป Backend
+                  <!--  * Validate Email ที่ Frontend ก่อนส่งไป Backend -->
                 </div>
             </div>
         </div>

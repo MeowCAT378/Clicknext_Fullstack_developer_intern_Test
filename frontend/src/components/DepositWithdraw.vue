@@ -2,7 +2,8 @@
   <div class="mx-auto" style="max-width: 720px;">
     <div class="text-center mb-4">
       <div class="fs-5">จำนวนเงินคงเหลือ</div>
-      <div class="fs-3 fw-bold">{{ formatMoney(balance) }} บาท</div>
+      <!-- ใส่สกุลเงินได้ }} *** </div> -->
+      <div class="fs-3 fw-bold">{{ formatMoney(balance) }} </div>
     </div>
 
     <div class="card shadow-sm">
@@ -32,7 +33,8 @@
         <div class="modal-content">
           <div class="modal-body p-4">
             <h6 class="mb-3">ยืนยันการฝาก-ถอน</h6>
-            <div>จำนวนเงิน: <b>{{ formatMoney(Number(amount || 0)) }}</b> บาท</div>
+            <!-- ใส่สกุลเงินได้ </b> ********** </div> -->
+            <div>จำนวนเงิน: <b>{{ formatMoney(Number(amount || 0)) }}</b> </div> 
             <div class="text-muted mt-1" style="font-size: 12px;">โดย {{ user?.email || '-' }}</div>
 
             <div class="d-flex gap-2 justify-content-end mt-4">
