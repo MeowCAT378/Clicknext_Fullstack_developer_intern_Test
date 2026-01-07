@@ -2,8 +2,10 @@
     <div class="mx-auto" style="max-width: 980px;">
         <h5 class="text-center mb-3">ประวัติรายการฝากถอน</h5>
 
+        <!-- Transaction Table -->
         <div class="card shadow-sm">
             <div class="card-body p-3 p-md-4">
+                <!-- responsive -->
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle text-center">
                         <thead class="table-light">
@@ -16,15 +18,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Body -->
                             <tr v-for="t in items" :key="t.id">
+                                <!-- วนลูปแสดงรายการ -->
                                 <td>{{ formatDateTime(t.created_at) }}</td>
                                 <td>{{ formatMoney(t.amount) }}</td>
                                 <td>
+                                    <!-- ประเภทฝาก / ถอน -->
                                     <span
                                         :class="t.type === 'DEPOSIT' ? 'text-success fw-semibold' : 'text-danger fw-semibold'">
                                         {{ t.type === 'DEPOSIT' ? 'ฝาก' : 'ถอน' }}
                                     </span>
                                 </td>
+                                <!-- Email ผู้ใช้ -->
                                 <td class="text-start">{{ user?.email }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
@@ -43,9 +49,11 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
+                    <!-- จำนวนรายการที่แสดง -->
                     <div class="text-muted" style="font-size: 12px;">
                         แสดง {{ items.length ? 1 : 0 }} ถึง {{ items.length }} จาก {{ items.length }} รายการ
                     </div>
+                    <!-- ปุ่ม Refresh -->
                     <button class="btn btn-outline-secondary btn-sm" @click="fetchList" :disabled="loading">
                         Refresh
                     </button>
@@ -59,11 +67,13 @@
                 <div class="modal-content">
                     <div class="modal-body p-4">
                         <h6 class="mb-1">แก้ไขจำนวนเงินฝาก</h6>
+                        <!-- รายละเอียด -->
                         <div class="text-muted mb-3" style="font-size: 12px;">
                             ของวันที่ {{ editItem ? formatDateTime(editItem.created_at) : '-' }}<br />
                             จากอีเมล {{ user?.email }}
                         </div>
 
+                        <!-- Input จำนวนเงิน   -->
                         <label class="form-label">จำนวนเงิน <span class="text-danger">*</span></label>
                         <input v-model="editAmount" type="number" class="form-control" min="0" max="100000" />
 
@@ -125,10 +135,12 @@ const delEl = ref(null)
 let editModal = null
 let delModal = null
 
+// ฟอร์แมตจำนวนเงิน
 function formatMoney(n) {
     return new Intl.NumberFormat('th-TH', { maximumFractionDigits: 2 }).format(Number(n || 0))
 }
 
+// ฟอร์แมตวันที่และเวลา
 function formatDateTime(iso) {
     if (!iso) return '-'
     const d = new Date(iso)
@@ -138,6 +150,7 @@ function formatDateTime(iso) {
     }).format(d)
 }
 
+// ดึงรายการทั้งหมด
 async function fetchList() {
     try {
         loading.value = true
@@ -166,7 +179,7 @@ async function confirmEdit() {
     hideEdit()
     await fetchList()
 
-    // backend ควรคืน balance ใหม่ (หรือให้ fetch /me)
+    // backend คืน balance ใหม่ มาให้
     const me = await api.get('/me')
     emit('balance-updated', me.data.balance)
 }
@@ -180,11 +193,13 @@ function hideDelete() {
     delModal?.hide()
 }
 
+// ยืนยันการลบ
 async function confirmDelete() {
     await api.delete(`/transactions/${deleteItem.value.id}`)
     hideDelete()
     await fetchList()
 
+    // update ยอดเงินคงเหลือหลังลบ
     const me = await api.get('/me')
     emit('balance-updated', me.data.balance)
 }
