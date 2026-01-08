@@ -9,15 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    /**
-     * แสดงรายการธุรกรรมทั้งหมดของผู้ใช้ที่ login อยู่
-     */
+    // แสดงรายการธุรกรรมทั้งหมดของผู้ใช้ที่ login อยู่
     public function index(Request $request)
     {
-        // ดึง user id จาก token ที่ login
+        // ดึง id ที่ login
         $userId = $request->user()->id;
 
-        // ดึงรายการธุรกรรมของ user เรียงจากใหม่ไปเก่า
+        // ดึงรายการ user เรียงจากใหม่ไปเก่า
         $items = Transaction::where('user_id', $userId)
             ->orderByDesc('created_at')
             ->get(['id', 'type', 'amount', 'created_at']);
@@ -26,12 +24,10 @@ class TransactionController extends Controller
         return response()->json(['items' => $items]);
     }
 
-    /**
-     * สร้างธุรกรรมใหม่ (ฝากเงิน / ถอนเงิน)
-     */
+    // สร้างธุรกรรมใหม่ (ฝากเงิน / ถอนเงิน)
     public function store(Request $request)
     {
-        // ดึง user id จากผู้ใช้ที่ login
+        // ดึง id ที่ login
         $userId = $request->user()->id;
 
         // ตรวจสอบข้อมูลที่ส่งมา
@@ -40,17 +36,17 @@ class TransactionController extends Controller
             'amount' => ['required', 'numeric', 'min:0', 'max:100000'], // จำนวนเงิน
         ]);
 
-        // ใช้ DB transaction เพื่อให้ข้อมูลสอดคล้อง
+        // ใช้ DB transaction
         DB::transaction(function () use ($userId, $data) {
 
-            // บันทึกธุรกรรมยอดใหม่
+            // บันทึกยอดใหม่
             Transaction::create([
                 'user_id' => $userId,
                 'type' => $data['type'],
                 'amount' => $data['amount'],
             ]);
 
-            // คำนวณยอดเงินใหม่หลังทำธุรกรรม
+            // คำนวณยอดเงินใหม่
             $this->recalculateBalance($userId);
         });
 
@@ -61,12 +57,10 @@ class TransactionController extends Controller
         return response()->json(['balance' => (float) $balance]);
     }
 
-    /**
-     * แก้ไขจำนวนเงินของธุรกรรมที่มีอยู่
-     */
+    // แก้ไขจำนวนเงินที่มีอยู่
     public function update(Request $request, $id)
     {
-        // ดึง user id จากใช้ที่ login
+        // ดึง id ที่ login
         $userId = $request->user()->id;
 
         // ตรวจสอบข้อมูลที่ส่งมา
@@ -74,10 +68,10 @@ class TransactionController extends Controller
             'amount' => ['required', 'numeric', 'min:0', 'max:100000'], // จำนวนเงินใหม่
         ]);
 
-        // ใช้ DB transaction เพื่อความปลอดภัยของข้อมูล
+        // ใช้ DB transaction
         DB::transaction(function () use ($userId, $id, $data) {
 
-            // ค้นหาธุรกรรม user ตาม id
+            // ค้นหาธุรกรรมตาม id
             $tx = Transaction::where('user_id', $userId)
                 ->where('id', $id)
                 ->firstOrFail();
@@ -94,9 +88,7 @@ class TransactionController extends Controller
         return response()->json(['ok' => true]);
     }
 
-    /**
-     * ลบธุรกรรม
-     */
+    // ลบธุรกรรม
     public function destroy(Request $request, $id)
     {
         // ดึง user id จากใช้ที่ login
@@ -105,7 +97,7 @@ class TransactionController extends Controller
         // ใช้ DB transaction
         DB::transaction(function () use ($userId, $id) {
 
-            // ค้นหาและลบธุรกรรมของ
+            // ค้นหาและลบธุรกรรม
             Transaction::where('user_id', $userId)
                 ->where('id', $id)
                 ->firstOrFail()
@@ -115,13 +107,11 @@ class TransactionController extends Controller
             $this->recalculateBalance($userId);
         });
 
-        // ส่งผลลัพธ์กลับ
+        // ส่งผลลัพธ์
         return response()->json(['ok' => true]);
     }
 
-    /**
-     * คำนวณยอดเงินคงเหลือใหม่จากธุรกรรมทั้งหมด
-     */
+    // คำนวณยอดเงินคงเหลือใหม่
     private function recalculateBalance(int $userId): void
     {
         // รวมยอดฝากทั้งหมด
@@ -134,7 +124,7 @@ class TransactionController extends Controller
             ->where('type', 'WITHDRAW')
             ->sum('amount');
 
-        // อัปเดตหรือสร้าง account พร้อมยอดเงินคงเหลือ
+        // อัปเดต
         Account::updateOrCreate(
             ['user_id' => $userId],
             ['balance' => $deposit - $withdraw]

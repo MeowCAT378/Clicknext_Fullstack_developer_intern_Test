@@ -67,7 +67,6 @@ const amount = ref('')
 const loading = ref(false)
 const error = ref('')
 const actionType = ref(null)
-
 const confirmEl = ref(null)
 let bsModal = null
 

@@ -20,7 +20,7 @@
                         <tbody>
                             <!-- Body -->
                             <tr v-for="t in items" :key="t.id">
-                                <!-- วนลูปแสดงรายการ -->
+                                <!-- ลูปแสดงรายการ -->
                                 <td>{{ formatDateTime(t.created_at) }}</td>
                                 <td>{{ formatMoney(t.amount) }}</td>
                                 <td>
@@ -124,12 +124,9 @@ const emit = defineEmits(['balance-updated'])
 
 const items = ref([])
 const loading = ref(false)
-
 const editItem = ref(null)
 const editAmount = ref('')
-
 const deleteItem = ref(null)
-
 const editEl = ref(null)
 const delEl = ref(null)
 let editModal = null
