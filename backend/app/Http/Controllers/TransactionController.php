@@ -124,7 +124,7 @@ class TransactionController extends Controller
             ->where('type', 'WITHDRAW')
             ->sum('amount');
 
-        // อัปเดต
+        // อัปเดตยอดเงินคงเหลือใน account ของผู้ใช้
         Account::updateOrCreate(
             ['user_id' => $userId],
             ['balance' => $deposit - $withdraw]
