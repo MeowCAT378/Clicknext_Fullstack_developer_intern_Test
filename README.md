@@ -31,13 +31,10 @@
 
 The application is containerized using Docker Compose and consists of the following containers:
 - Frontend container (Vue)  
-  http://localhost:5173
 - Backend container (Laravel API)  
-  http://localhost:8000
 - Database container (MySQL)
 
 phpMyAdmin is also provided for database inspection:  
-http://localhost:8080
 
 ---
 
