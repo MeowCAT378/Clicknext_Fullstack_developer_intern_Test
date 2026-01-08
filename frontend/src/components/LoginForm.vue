@@ -26,7 +26,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import api from '../api' // ถ้าใช้ alias @ ก็เปลี่ยนเป็น: import api from '@/api'
+import api from '@/api' // ถ้าใช้ alias @ ก็เปลี่ยนเป็น: import api from '@/api'
 
 const router = useRouter()
 
