@@ -1,5 +1,3 @@
-# Clicknext
-
 ## Tech Stack and Versions
 
 ### Frontend
