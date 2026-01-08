@@ -18,11 +18,11 @@
 ## Package Manager
 
 ### Frontend
-- Uses npm  
+- Uses npm
 - `package.json` and `package-lock.json` are included
 
 ### Backend
-- Uses composer  
+- Uses composer
 - `composer.json` and `composer.lock` are included
 
 ---
@@ -30,11 +30,14 @@
 ## Environment and Docker
 
 The application is containerized using Docker Compose and consists of the following containers:
-- Frontend container (Vue)
-- Backend container (Laravel API)
+- Frontend container (Vue)  
+  http://localhost:5173
+- Backend container (Laravel API)  
+  http://localhost:8000
 - Database container (MySQL)
 
-phpMyAdmin is also provided for database inspection.
+phpMyAdmin is also provided for database inspection:  
+http://localhost:8080
 
 ---
 
