@@ -1,9 +1,4 @@
 <template>
-    <!--Test
-    <div style="position:fixed;bottom:10px;right:10px;z-index:9999;background:#000;color:#fff;padding:6px 10px;">
-  LOGIN_VUE_EDIT_OK
-</div>
--->
     <!-- Login Page Layout -->
     <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
         <div class="card shadow-sm" style="width: 420px; max-width: calc(100vw - 24px);">
