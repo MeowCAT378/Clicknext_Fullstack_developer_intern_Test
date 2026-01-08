@@ -2,10 +2,12 @@
     <div class="min-vh-100 bg-white">
         <!-- Header -->
         <nav class="navbar navbar-light border-bottom px-3">
+            <!-- drawer สำหรับ mobile -->
             <button class="btn btn-outline-dark d-md-none" @click="drawerOpen = true">
                 ☰
             </button>
             <div class="fw-semibold">Clicknext</div>
+            <!-- ปุ่ม Logout -->
             <button class="btn btn-dark btn-sm" @click="logout">Logout</button>
         </nav>
 
@@ -13,11 +15,13 @@
             <!-- Sidebar (desktop) -->
             <aside class="border-end d-none d-md-block" style="width: 220px; min-height: calc(100vh - 56px);">
                 <div class="p-3">
+                    <!-- เมนู Deposit / Withdraw -->
                     <button class="btn w-100 text-start mb-2" :class="activeTab === 'dw' ? 'btn-dark' : 'btn-light'"
                         @click="activeTab = 'dw'">
                         Deposit / Withdraw
                     </button>
 
+                    <!-- เมนู Transaction -->
                     <button class="btn w-100 text-start" :class="activeTab === 'tx' ? 'btn-dark' : 'btn-light'"
                         @click="activeTab = 'tx'">
                         Transaction
@@ -87,8 +91,9 @@ async function loadMe() {
         logout()
     }
 }
-
+ // ฟังก์ชัน Logout
 function logout() {
+    // ลบ token และ user ออกจาก localStorage
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     router.push('/login')
