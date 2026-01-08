@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     // Transaction Routes
-    // ดึงรายการธุรกรรมทั้งหมดของ
+    // ดึงรายการธุรกรรมทั้งหมดของผู้ใช้ที่ล็อกอินอยู่
     Route::get('/transactions', [TransactionController::class, 'index']);
     // สร้างยอดใหม่ (ฝาก / ถอน)
     Route::post('/transactions', [TransactionController::class, 'store']);
