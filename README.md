@@ -33,5 +33,3 @@ The application is containerized using Docker Compose and consists of the follow
 - Database container (MySQL)
 
 phpMyAdmin is also provided for database inspection:  
-
----
