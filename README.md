@@ -35,10 +35,3 @@ The application is containerized using Docker Compose and consists of the follow
 phpMyAdmin is also provided for database inspection:  
 
 ---
-
-## Running the Project
-
-After starting Docker Desktop, run the following command:
-
-```bash
-docker compose up -d
