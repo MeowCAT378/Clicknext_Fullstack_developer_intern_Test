@@ -32,4 +32,4 @@ The application is containerized using Docker Compose and consists of the follow
 - Backend container (Laravel API)  
 - Database container (MySQL)
 
-phpMyAdmin is also provided for database inspection and management, running as an additional Docker container and accessible via the host and port configured in `docker-compose.yml`.  
+phpMyAdmin is also provided for database inspection and management, running as an additional Docker container and accessible via the host and port configured in `docker-compose.yml`
